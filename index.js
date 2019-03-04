@@ -1,9 +1,13 @@
+// TODO Add readme
 // TODO add try-catch-finally blocks so that the browser won't be left open
+// TODO Add exports
+// TODO Add test script that lists and pulls a couple of events
+// TODO publish on npm
 
 const puppeteer = require('puppeteer');
 
 const parseDateTime = (dateTimeStr) => {
-  // TODO Actually parse the string
+  // TODO Actually parse the string to datetime
   return dateTimeStr;
 };
 
