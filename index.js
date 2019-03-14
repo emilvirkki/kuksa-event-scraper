@@ -1,7 +1,6 @@
-// TODO Add test script that lists and pulls a couple of events
+// TODO add ability to filter events by dates so that tests can be made reliable
 // TODO Add readme
 // TODO publish on npm
-// TODO add ability to filter events by dates
 
 const puppeteer = require('puppeteer');
 const moment = require('moment');
@@ -25,7 +24,7 @@ const getEvents = async (filters) => {
     const page = await browser.newPage();
 
     await page.goto('https://kuksa.partio.fi/Kotisivut/tilaisuudet.aspx');
-    await page.select('#dpJarjestajaId', filters.organizer);
+    await page.select('#dpJarjestajaId', String(filters.organizer));
     await page.click('#btnHae');
     await page.waitForNavigation();
     links = await page.$$eval('.varilinkki', links => links.map(a => a.href));
@@ -57,6 +56,10 @@ const getEventInfo = async (eventId) => {
     await page.goto(`https://kuksa.partio.fi/Kotisivut/tilaisuus_tiedot.aspx?TIAId=${eventId}`);
 
     const datesString = await page.$eval('#lblAjankohta', e => e.textContent);
+    if (datesString.length === 0) {
+      // No dates == event not found
+      return null;
+    }
     const dates = datesString.split(' - ');
     // Only dates are known, not exact times
     const onlyDatesAvailable = datesString.indexOf('klo') === -1;
@@ -73,9 +76,11 @@ const getEventInfo = async (eventId) => {
       location: (await page.$eval('#lblPaikka', e => e.textContent)) || null,
       eventType: (await page.$eval('#lblTapahtumanTyyppi', e => e.textContent)) || null,
       ageGroup: (await page.$eval('#lblIkakausi', e => e.textContent)) || null,
-      description: (await page.$eval('#lblKuvaus', e => e.textContent)) || null,
+      descriptionText: (await page.$eval('#lblKuvaus', e => e.textContent)) || null,
+      descriptionHTML: (await page.$eval('#lblKuvaus', e => e.innerHTML)) || null,
     };
   } catch (e) {
+    console.error(e);
     throw new Error(`Finding event info failed due to puppeteer error: ${e}`);
   } finally {
     await browser.close();
