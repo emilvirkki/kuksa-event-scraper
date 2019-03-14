@@ -3,6 +3,7 @@
 // TODO Add exports
 // TODO Add test script that lists and pulls a couple of events
 // TODO publish on npm
+// TODO add ability to filter events by dates
 
 const puppeteer = require('puppeteer');
 
@@ -11,28 +12,36 @@ const parseDateTime = (dateTimeStr) => {
   return dateTimeStr;
 };
 
-const getEvents = async (organizer) => {
-  //TODO allow finding events by date also
-  //TODO validate parameters strictly
+const getEvents = async (filters) => {
+  if (filters.organizer && !Number.isInteger(+filters.organizer)) {
+    throw new Error('Organizer ID must be an integer');
+  }
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-    await page.setViewport({
-    width: 1200,
-    height: 1400,
-  });
 
   await page.goto('https://kuksa.partio.fi/Kotisivut/tilaisuudet.aspx');
-  await page.select('#dpJarjestajaId', organizer);
+  await page.select('#dpJarjestajaId', filters.organizer);
   await page.click('#btnHae');
   await page.waitForNavigation();
   const links = await page.$$eval('.varilinkki', links => links.map(a => a.href));
   await browser.close();
-  //TODO add self-diagnostic that checks urls are in expected format
-  return links.map(url => url.split('=')[1]);
+
+  return links.map(url => {
+    const id = +url.split('=')[1];
+    if (!Number.isInteger(id)) {
+      throw new Error('Loading event list failed: there are probably changes in Kuksa\
+       that require updating this library');
+    }
+    return id;
+  });
 };
 
 const getEventInfo = async (eventId) => {
-  //TODO validate eventId
+  if (!Number.isInteger(+eventId)) {
+    throw new Error('Event ID must be an integer');
+  }
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
     await page.setViewport({
@@ -67,13 +76,15 @@ const getEventInfo = async (eventId) => {
 };
 
 (async () => {
-  const eventIds = await getEvents('9999426');
+  const eventIds = await getEvents({
+    organizer: '9999426'
+  });
   console.log('Events: ', eventIds);
   for (id of eventIds) {
     console.log('Fetching ' + id);
     const eventInfo = await getEventInfo(id);
     console.log(eventInfo);
   }
-  console.log(await getEventInfo(101));
+  console.log(await getEventInfo('101'));
 })();
 
