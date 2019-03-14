@@ -1,4 +1,3 @@
-// TODO Add exports
 // TODO Add test script that lists and pulls a couple of events
 // TODO Add readme
 // TODO publish on npm
@@ -84,16 +83,4 @@ const getEventInfo = async (eventId) => {
   return res;
 };
 
-(async () => {
-  const eventIds = await getEvents({
-    organizer: '9999426'
-  });
-  console.log('Events: ', eventIds);
-  for (id of eventIds) {
-    console.log('Fetching ' + id);
-    const eventInfo = await getEventInfo(id);
-    console.log(eventInfo);
-  }
-  console.log(await getEventInfo('101'));
-})();
-
+module.exports = { getEvents, getEventInfo };
