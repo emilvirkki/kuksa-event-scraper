@@ -1,5 +1,3 @@
-// TODO publish on npm
-
 const puppeteer = require('puppeteer');
 const moment = require('moment');
 

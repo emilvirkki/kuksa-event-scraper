@@ -1,15 +1,15 @@
-# Event Screper for Kuksa
+# Event Scraper for Kuksa
 
 Library that scrapes events from [Kuksa's event listing](https://kuksa.partio.fi/kotisivut/tilaisuudet.aspx) using Puppeteer.
 
 ## Installation
 
-Clone this repository and run `npm install`
+You can install the library using `npm install kuksa-event-scraper`
 
 ## Usage
 
 ```javascript
-const kuksa = require('/path/to/kuksa-event-scraper');
+const kuksa = require('kuksa-event-scraper');
 
 (async () => {
   const eventIds = await kuksa.getEvents({

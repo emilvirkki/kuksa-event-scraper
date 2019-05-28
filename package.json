@@ -6,6 +6,10 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emilvirkki/kuksa-event-scraper.git"
+  },
   "author": "Emil Virkki",
   "license": "MIT",
   "dependencies": {
