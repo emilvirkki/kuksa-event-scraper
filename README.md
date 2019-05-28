@@ -44,11 +44,11 @@ Returns the details of an event, e.g.
 { id: 12312, // same as the id you gave
   name: 'Kesäleiri 2017',
   organizer: 'Matinkylän Mallikkaat ry',
-  dateTimeStarts: 2017-07-21T09:00:00.000Z,
-  dateTimeEnds: 2017-07-27T09:00:00.000Z,
+  dateTimeStarts: new Date('2017-07-21T09:00:00.000Z'),
+  dateTimeEnds: new Date('2017-07-27T09:00:00.000Z'),
   onlyDatesAvailable: true, // true if the exact starting and ending time is not available
-  registrationEnds: 2017-06-14T09:00:00.000Z,
-  lateRegistrationEnds: 2017-07-14T09:00:00.000Z,,
+  registrationEnds: new Date('2017-06-14T09:00:00.000Z'),
+  lateRegistrationEnds: new Date('2017-07-14T09:00:00.000Z'),
   location: 'Mallikkalan Leirialua',
   eventType: 'Leiri (väh. 3 yötä)',
   ageGroup: 'Seikkailijat', // age group, if available
