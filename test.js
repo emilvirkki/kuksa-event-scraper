@@ -8,14 +8,37 @@ console.warn('This tests agains the live Kuksa. Remember that the tests may fail
 
 describe('getEvents()', function() {
   // The scraping is slow
-  this.timeout(10*1000);
+  this.timeout(20*1000);
 
-  // TODO Add date filtering so this test won't break once events are added
-  it.skip('returns correct event ids for organizer', async function() {
+  it('returns correct event ids for organizer', async function() {
     const eventIds = await api.getEvents({
       organizer: KORVEN_VAELTAJAT_ID,
+      dateStart: new Date('2018-05-29T12:00:00'),
+      dateEnd: new Date('2018-09-30T12:00:00'),
     });
-    expect(eventIds).to.eql([26273]);
+    expect(eventIds).to.eql([21628, 21845, 23159]);
+  });
+
+  it('returns correct event ids without organizer', async function() {
+    const eventIds = await api.getEvents({
+      dateStart: new Date('2018-06-01T12:00:00'),
+      dateEnd: new Date('2018-06-02T12:00:00'),
+    });
+    expect(eventIds).to.eql([24732, 14188, 18968]);
+  });
+
+  it('returns a lot of events without any filters', async function() {
+    const eventIds = await api.getEvents();
+    expect(eventIds.length).to.greaterThan(500);
+    expect(eventIds.some(i => !Number.isInteger(i))).to.be.false;
+  });
+
+  it('events with only start filter set', async function() {
+    const eventIds = await api.getEvents({
+      dateStart: new Date('2019-06-01T12:00:00'),
+    });
+    expect(eventIds.length).to.greaterThan(100);
+    expect(eventIds.some(i => !Number.isInteger(i))).to.be.false;
   });
 
   it('throws error for non-integer organizer', async function() {

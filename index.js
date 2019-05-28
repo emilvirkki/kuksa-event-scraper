@@ -1,5 +1,3 @@
-// TODO add ability to filter events by dates so that tests can be made reliable
-// TODO Add readme
 // TODO publish on npm
 
 const puppeteer = require('puppeteer');
@@ -13,7 +11,18 @@ const parseDateTime = (dateTimeStr) => {
   }
 };
 
-const getEvents = async (filters) => {
+const setDateSelect = async (page, fieldId, date) => {
+  if (date) {
+    const dateStr = moment(date).format('D.M.YYYY');
+    await page.evaluate(
+      (fieldId, dateStr) => document.getElementById(fieldId).value = dateStr,
+      fieldId,
+      dateStr
+    );
+  }
+}
+
+const getEvents = async (filters = {}) => {
   if (filters.organizer && !Number.isInteger(+filters.organizer)) {
     throw new Error('Organizer ID must be an integer');
   }
@@ -25,7 +34,10 @@ const getEvents = async (filters) => {
 
     await page.goto('https://kuksa.partio.fi/Kotisivut/tilaisuudet.aspx');
     await page.select('#dpJarjestajaId', String(filters.organizer));
+    await setDateSelect(page, 'txtAlkupvm', filters.dateStart);
+    await setDateSelect(page, 'txtLoppupvm', filters.dateEnd);
     await page.click('#btnHae');
+
     await page.waitForNavigation();
     links = await page.$$eval('.varilinkki', links => links.map(a => a.href));
   } catch (e) {

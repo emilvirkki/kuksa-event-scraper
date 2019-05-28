@@ -38,6 +38,18 @@ If filter is not given, returns all events.
 
 Currently the only supported filter is `organizer`, which is the event organizer's id in Kuksa. You can find the ID of your troop by inspecting the organiser select in the kuksa event list.
 
+The available filters are:
+
+```javascript
+{
+  organizer: 9999426, // id of the organizer, e.g. troop (optional)
+  dateStart: new Date(), // only list events starting after this date (optional)
+  dateEnd: new Date(), // only list events before this date (optional)
+}
+```
+
+You can combine different filters as you like. You can find the available organiser ids for example by inspecting the [event search](https://kuksa.partio.fi/kotisivut/tilaisuudet.aspx) organiser dropdown with developer tools.
+
 ### getEventInfo(eventId)
 
 Returns the details of an event, e.g.
