@@ -49,7 +49,7 @@ Returns the details of an event, e.g.
   onlyDatesAvailable: true, // true if the exact starting and ending time is not available
   registrationEnds: new Date('2017-06-14T09:00:00.000Z'),
   lateRegistrationEnds: new Date('2017-07-14T09:00:00.000Z'),
-  location: 'Mallikkalan Leirialua',
+  location: 'Mallikkalan Leirialue',
   eventType: 'Leiri (väh. 3 yötä)',
   ageGroup: 'Seikkailijat', // age group, if available
   descriptionText: 'Leirillä on luvassa kivaa puuhaa',
