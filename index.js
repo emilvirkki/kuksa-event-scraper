@@ -45,6 +45,7 @@ const getEvents = async (filters = {}) => {
     await page.waitForNavigation();
     links = await page.$$eval('.varilinkki', links => links.map(a => a.href));
   } catch (e) {
+    console.error(e);
     throw new Error(`Finding events failed due to puppeteer error: ${e}`);
   } finally {
     await browser.close();
