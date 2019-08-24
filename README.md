@@ -1,6 +1,6 @@
 # Event Scraper for Kuksa
 
-Library that scrapes events from [Kuksa's event listing](https://kuksa.partio.fi/kotisivut/tilaisuudet.aspx) using Puppeteer.
+A library that scrapes events from [Kuksa's event listing](https://kuksa.partio.fi/kotisivut/tilaisuudet.aspx) using Puppeteer.
 
 ## Installation
 
@@ -71,3 +71,7 @@ Returns the details of an event, e.g.
 ```
 
 If an event with the given id is not found, returns `null`.
+
+### setPuppeteerOptions(options)
+
+Allows you to set the options passed to `puppeteer.launch()`. You should rarely be needing this. In Heroku you may need to pass `{ args: ['--no-sandbox'] }` to this function before any other calls to get Puppeteer running.

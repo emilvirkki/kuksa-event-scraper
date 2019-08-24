@@ -3,7 +3,7 @@ const expect = require('chai').expect;
 
 const KORVEN_VAELTAJAT_ID = 9999426;
 
-console.warn('This tests agains the live Kuksa. Remember that the tests may fail also '
+console.warn('This tests against the live Kuksa instance. Remember that the tests may fail also '
   + 'because the events have been edited.');
 
 describe('getEvents()', function() {

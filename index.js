@@ -1,6 +1,8 @@
 const puppeteer = require('puppeteer');
 const moment = require('moment');
 
+let puppeteerOptions = {};
+
 const parseDateTime = (dateTimeStr) => {
   if (dateTimeStr.indexOf('klo') > -1) {
     return moment(dateTimeStr, 'DD.MM.YYYY [klo] HH:mm').toDate();
@@ -18,7 +20,11 @@ const setDateSelect = async (page, fieldId, date) => {
       dateStr
     );
   }
-}
+};
+
+const setPuppeteerOptions = async (options) => {
+  puppeteerOptions = options;
+};
 
 const getEvents = async (filters = {}) => {
   if (filters.organizer && !Number.isInteger(+filters.organizer)) {
@@ -27,7 +33,7 @@ const getEvents = async (filters = {}) => {
 
   let browser, links;
   try {
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch(puppeteerOptions);
     const page = await browser.newPage();
 
     await page.goto('https://kuksa.partio.fi/Kotisivut/tilaisuudet.aspx');
@@ -61,7 +67,7 @@ const getEventInfo = async (eventId) => {
 
   let browser, res;
   try {
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch(puppeteerOptions);
     const page = await browser.newPage();
     await page.goto(`https://kuksa.partio.fi/Kotisivut/tilaisuus_tiedot.aspx?TIAId=${eventId}`);
 
@@ -98,4 +104,4 @@ const getEventInfo = async (eventId) => {
   return res;
 };
 
-module.exports = { getEvents, getEventInfo };
+module.exports = { setPuppeteerOptions, getEvents, getEventInfo };
