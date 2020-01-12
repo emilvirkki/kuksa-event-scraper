@@ -80,18 +80,18 @@ describe('getEventInfo()', function() {
     expect(res.onlyDatesAvailable).to.equal(true);
 
     // The different time zones are intentional - summer time ended on Oct 26th early morning
-    expect(res.dateTimeStarts.toString()).to.equal('Fri Oct 24 2014 12:00:00 GMT+0300 (EEST)');
-    expect(res.dateTimeEnds.toString()).to.equal('Sun Oct 26 2014 12:00:00 GMT+0200 (EET)');
-    expect(res.registrationEnds.toString()).to.equal('Sun Aug 24 2014 12:00:00 GMT+0300 (EEST)');
+    expect(res.dateTimeStarts.toString()).to.match(/^Fri Oct 24 2014 12:00:00 GMT\+0300.*/);
+    expect(res.dateTimeEnds.toString()).to.match(/^Sun Oct 26 2014 12:00:00 GMT\+0200.*/);
+    expect(res.registrationEnds.toString()).to.match(/^Sun Aug 24 2014 12:00:00 GMT\+0300.*/);
   });
 
   it('returns dates with times correctly', async function() {
     const res = await api.getEventInfo(18215);
     expect(res.onlyDatesAvailable).to.equal(false);
-    expect(res.dateTimeStarts.toString()).to.equal('Fri Dec 08 2017 17:00:00 GMT+0200 (EET)');
-    expect(res.dateTimeEnds.toString()).to.equal('Sun Dec 10 2017 13:00:00 GMT+0200 (EET)');
+    expect(res.dateTimeStarts.toString()).to.match(/^Fri Dec 08 2017 17:00:00 GMT\+0200.*/);
+    expect(res.dateTimeEnds.toString()).to.match(/^Sun Dec 10 2017 13:00:00 GMT\+0200.*/);
     // Registration ends is a date without time -> default to 12:00
-    expect(res.registrationEnds.toString()).to.equal('Thu Dec 07 2017 12:00:00 GMT+0200 (EET)');
+    expect(res.registrationEnds.toString()).to.match(/^Thu Dec 07 2017 12:00:00 GMT\+0200.*/);
   });
 
   it('returns null for empty fields', async function() {
