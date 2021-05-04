@@ -35,7 +35,7 @@ describe('getEvents()', function() {
 
   it('events with only start filter set', async function() {
     const eventIds = await api.getEvents({
-      dateStart: new Date('2019-06-01T12:00:00'),
+      dateStart: new Date('2021-01-01T12:00:00'),
     });
     expect(eventIds.length).to.greaterThan(100);
     expect(eventIds.some(i => !Number.isInteger(i))).to.be.false;

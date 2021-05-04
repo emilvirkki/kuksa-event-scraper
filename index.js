@@ -41,7 +41,7 @@ const getEvents = async (filters = {}) => {
     await setDateSelect(page, 'txtAlkupvm', filters.dateStart);
     await setDateSelect(page, 'txtLoppupvm', filters.dateEnd);
     await page.click('#btnHae');
-
+    
     await page.waitForNavigation();
     links = await page.$$eval('.varilinkki', links => links.map(a => a.href));
   } catch (e) {
