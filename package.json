@@ -13,7 +13,7 @@
   "author": "Emil Virkki",
   "license": "MIT",
   "dependencies": {
-    "moment": "2.29.1",
+    "moment": "^2.29.3",
     "puppeteer": "9.1.0"
   },
   "devDependencies": {
