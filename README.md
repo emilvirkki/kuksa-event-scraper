@@ -38,8 +38,6 @@ Returns the ids of the events matching the filters as an array, e.g.
 
 If filter is not given, returns all events.
 
-Currently the only supported filter is `organizer`, which is the event organizer's id in Kuksa. You can find the ID of your troop by inspecting the organiser select in the kuksa event list.
-
 The available filters are:
 
 ```javascript
