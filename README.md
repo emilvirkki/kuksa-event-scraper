@@ -6,6 +6,8 @@ A library that scrapes events from [Kuksa's event listing](https://kuksa.partio.
 
 You can install the library using `npm install kuksa-event-scraper`
 
+If the installation fails due to missing libraries, try installing Chrome/Chromium using your OS's package manager and then try again. This ensures all the necessary libraries for building Chrome/Chromium are available on your machine.
+
 ## Usage
 
 ```javascript
